@@ -1,0 +1,20 @@
+.gradle
+build
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea/
+**/.idea
+.idea
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+bin
+.settings
+.project*
+.classpath
+.factorypath
+**/logs/
