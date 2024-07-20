@@ -26,6 +26,10 @@ public final class App {
         return Integer.valueOf(port);
     }
 
+    private static String getBase() {
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+    }
+
     private static String readResourceFile(String fileName) throws IOException {
         var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
 
@@ -37,7 +41,7 @@ public final class App {
     public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+        hikariConfig.setJdbcUrl(getBase());
 
         var dataSource = new HikariDataSource(hikariConfig);
         String sql = readResourceFile("schema.sql");
