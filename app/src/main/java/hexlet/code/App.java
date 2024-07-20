@@ -22,13 +22,12 @@ import hexlet.code.repository.BaseRepository;
 public final class App {
 
     private static int getPort() {
-        String port = System.getenv().getOrDefault("PORT", "3000");
+        String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.valueOf(port);
     }
 
     private static String getBase() {
-        String gb = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
-        return String.valueOf(gb);
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
 
     }
 
