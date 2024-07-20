@@ -2,7 +2,7 @@
 //import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id 'java'
+ //   id 'java'
     id 'application'
     id 'checkstyle'
     id 'jacoco'
@@ -17,10 +17,10 @@ application {
     mainClass = 'hexlet.code.App'
 }
 
-//compileJava {
-//    options.release = 21
+compileJava {
+    options.release = 21
 //    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
-//}
+}
 
 
 repositories {
@@ -30,7 +30,8 @@ repositories {
 dependencies {
     testImplementation (platform('org.junit:junit-bom:5.10.0'))
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation("com.h2database:h2:2.2.224")
+//    implementation("com.h2database:h2:2.2.224")
+    implementation("com.h2database:h2:2.2.220")
     implementation("com.zaxxer:HikariCP:5.1.0")
 //    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
 //    implementation("org.apache.commons:commons-text:1.11.0")
@@ -58,7 +59,7 @@ test {
         //events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
         exceptionFormat "full"
         events "failed"
-        showStandardStreams = true
+        //showStandardStreams = true
     }
 }
 
