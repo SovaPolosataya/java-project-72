@@ -3,6 +3,9 @@ package hexlet.code;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 //import hexlet.code.controller.BooksController;
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
@@ -57,11 +60,15 @@ public final class App {
 
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
-            config.fileRenderer(new JavalinJte());
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
         app.before(ctx -> {
             ctx.contentType("text/html; charset=utf-8");
+        });
+
+        app.get("/", ctx -> {
+            ctx.render("index.jte");
         });
 
 //        app.get(NamedRoutes.booksPath(), BooksController::index);
@@ -74,7 +81,14 @@ public final class App {
 
     public static void main(String[] args) throws SQLException, IOException {
         Javalin app = getApp();
-        app.get("/", ctx -> ctx.result("Hello World"));
+        //app.get("/", ctx -> ctx.result("Hello World"));
         app.start(getPort());
+    }
+
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
     }
 }
