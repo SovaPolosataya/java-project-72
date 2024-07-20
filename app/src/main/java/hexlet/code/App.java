@@ -12,7 +12,7 @@ import io.javalin.rendering.template.JavalinJte;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+//import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -37,8 +37,7 @@ public final class App {
     private static String readResourceFile(String fileName) throws IOException {
         var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
 
-        assert inputStream != null;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             return reader.lines().collect(Collectors.joining("\n"));
         }
     }
@@ -51,7 +50,7 @@ public final class App {
         var dataSource = new HikariDataSource(hikariConfig);
         String sql = readResourceFile("schema.sql");
 
-        log.info(sql);
+        //log.info(sql);
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
             statement.execute(sql);
