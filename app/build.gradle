@@ -1,4 +1,4 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+//import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 //import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -53,9 +53,9 @@ test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport // report is always generated after tests run
     testLogging {
-        exceptionFormat = TestExceptionFormat.FULL
+        //exceptionFormat = TestExceptionFormat.FULL
         //events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
-        //exceptionFormat "full"
+        exceptionFormat "full"
         events "failed"
         showStandardStreams = true
     }
