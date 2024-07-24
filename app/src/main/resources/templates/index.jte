@@ -1,18 +1,33 @@
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-            crossorigin="anonymous">
-    <title>Project</title>
-  </head>
-  <body>
-    <div class="mx-auto p-4 py-md-5">
-      <main>
-            <p>Hello World</p>
-      </main>
-    </div>
-  </body>
-</html>
+@import hexlet.code.dto.MainPage
+@import hexlet.code.util.NamedRoutes
+
+@param MainPage page
+
+@template.layout.page(
+page = page,
+    content = @`
+        <div class="container-fluid bg-dark p-5">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto text-white">
+                    <h1 class="display-3 mb-0">Анализатор страниц</h1>
+                    <p class="lead">Бесплатно проверяйте сайты на SEO пригодность</p>
+                    <form action="${NamedRoutes.urlsPath()}" method="post" class="rss-form text-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input id="url-input" autofocus type="text" required name="url" aria-label="url"
+                                           class="form-control w-100" placeholder="ссылка" autocomplete="off">
+                                    <label for="url-input">Ссылка</label>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="h-100 btn btn-lg btn-primary px-sm-5">Проверить</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="mt-2 mb-0 text-muted">Пример: https://www.example.com</p>
+                </div>
+            </div>
+        </div>
+    `
+)
