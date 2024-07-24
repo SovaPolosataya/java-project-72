@@ -2,23 +2,22 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-//import hexlet.code.controller.BooksController;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.controller.UrlsController;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-//import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
-//import hexlet.code.util.NamedRoutes;
+import hexlet.code.util.NamedRoutes;
 import hexlet.code.repository.BaseRepository;
 
 @Slf4j
@@ -29,7 +28,7 @@ public final class App {
         return Integer.valueOf(port);
     }
 
-    private static String getBase() {
+    private static String getDatabase() {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
 
     }
@@ -45,12 +44,12 @@ public final class App {
     public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getBase());
+        hikariConfig.setJdbcUrl(getDatabase());
 
         var dataSource = new HikariDataSource(hikariConfig);
         String sql = readResourceFile("schema.sql");
 
-        //log.info(sql);
+        log.info(sql);
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
             statement.execute(sql);
@@ -66,21 +65,16 @@ public final class App {
             ctx.contentType("text/html; charset=utf-8");
         });
 
-        app.get("/", ctx -> {
-            ctx.render("index.jte");
-        });
-
-//        app.get(NamedRoutes.booksPath(), BooksController::index);
-//        app.get(NamedRoutes.bookBuildPath(), BooksController::build);
-//        app.get(NamedRoutes.bookPath("{id}"), BooksController::show);
-//        app.post(NamedRoutes.booksPath(), BooksController::create);
+        app.get(NamedRoutes.rootPath(), UrlsController::welcome);
+        app.get(NamedRoutes.urlsPath(), UrlsController::allUrls);
+        app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
+        app.post(NamedRoutes.urlsPath(), UrlsController::createUrl);
 
         return app;
     }
 
     public static void main(String[] args) throws SQLException, IOException {
         Javalin app = getApp();
-        //app.get("/", ctx -> ctx.result("Hello World"));
         app.start(getPort());
     }
 
