@@ -4,6 +4,7 @@ import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,21 +43,21 @@ public class AppTest {
 
     @Test
     public void testShowUrl() throws SQLException {
-        var name = "https://www.example.com";
-        var createdAt = Timestamp.valueOf(LocalDateTime.now());
-        var url = new Url(name, createdAt);
+        String name = "https://www.example.com";
+        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
+        Url url = new Url(name, createdAt);
         UrlRepository.save(url);
         JavalinTest.test(app, (server, client) -> {
-            var response = client.get("/url/" + url.getId());
+            var response = client.get("/urls/" + url.getId());
             assertThat(response.code()).isEqualTo(200);
         });
     }
 
     @Test
     public void testCreateUrl() throws SQLException {
-        var name = "https://www.example.com";
-        var createdAt = Timestamp.valueOf(LocalDateTime.now());
-        var url = new Url(name, createdAt);
+        String name = "https://www.example.com";
+        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
+        Url url = new Url(name, createdAt);
         UrlRepository.save(url);
         JavalinTest.test(app, (server, client) -> {
             var response = client.get("/urls");
@@ -72,4 +73,18 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(404);
         });
     }
+
+//    public  void mockTest() throws  Exception {
+//        MockWebServer server = new MockWebServer();
+//
+//        server.enqueue(new MockResponse().setBody("hello, world!"));
+//        server.enqueue(new MockResponse().setBody("sup, bra?"));
+//        server.enqueue(new MockResponse().setBody("yo dog"));
+//
+//        server.start();
+//
+//        HttpUrl baseUrl = server.url("/v1/chat/");
+//
+//
+//    }
 }
