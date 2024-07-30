@@ -5,10 +5,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.controller.RootController;
+import hexlet.code.controller.UrlChecksController;
 import hexlet.code.controller.UrlsController;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,8 +30,8 @@ public final class App {
     }
 
     private static String getDatabase() {
-        return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL",
+                "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
     }
 
     private static String readResourceFile(String fileName) throws IOException {
@@ -42,7 +43,6 @@ public final class App {
     }
 
     public static Javalin getApp() throws IOException, SQLException {
-
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabase());
 
@@ -65,10 +65,11 @@ public final class App {
             ctx.contentType("text/html; charset=utf-8");
         });
 
-        app.get(NamedRoutes.rootPath(), UrlsController::welcome);
+        app.get(NamedRoutes.rootPath(), RootController::welcome);
         app.get(NamedRoutes.urlsPath(), UrlsController::allUrls);
         app.get(NamedRoutes.urlPath("{id}"), UrlsController::showUrl);
         app.post(NamedRoutes.urlsPath(), UrlsController::createUrl);
+        app.post(NamedRoutes.urlCheckPath("{id}"), UrlChecksController::checkUrl);
 
         return app;
     }
