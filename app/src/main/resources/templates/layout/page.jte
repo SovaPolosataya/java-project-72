@@ -27,7 +27,7 @@
                 <a class="nav-link" href="/">Домашняя страница</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="/urls">Cписок адресов</a>
+                <a class="nav-link" href="/urls">Cписок сайтов</a>
              </li>
         </ul>
     </div>
@@ -41,4 +41,9 @@
 
 ${content}
 </body>
+<footer class="footer border-top py-1 mt-4 bg-light">
+    <div class="container-xl">
+        <div class="text-dark bg-muted text-center">created by <a href="https://github.com/SovaPolosataya" class="text-info">SovaPolosataya</a></div>
+    </div>
+</footer>
 </html>
