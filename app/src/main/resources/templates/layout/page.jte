@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Site Analyzer</title>
+    <title>Анализатор страниц</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
@@ -41,6 +41,7 @@
 
 ${content}
 </body>
+
 <footer class="footer border-top py-1 mt-4 bg-light">
     <div class="container-xl">
         <div class="text-dark bg-muted text-center">created by <a href="https://github.com/SovaPolosataya" class="text-info">SovaPolosataya</a></div>
