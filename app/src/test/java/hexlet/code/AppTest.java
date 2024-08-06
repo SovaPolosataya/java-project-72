@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -30,10 +31,14 @@ public class AppTest {
     private static Javalin app;
     private static MockWebServer mockServer;
     private static String baseUrl;
-    private static final String FIXTURES_FILE_PATH = "src/test/resources/fixtures/";
+
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
 
     private static String readFixture(String fileName) throws IOException, SQLException {
-        Path filePath = Path.of(FIXTURES_FILE_PATH + fileName);
+        Path filePath = getFixturePath(fileName);
         return Files.readString(filePath);
     }
 
