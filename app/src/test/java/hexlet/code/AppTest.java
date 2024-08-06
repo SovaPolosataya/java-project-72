@@ -50,9 +50,10 @@ public class AppTest {
     @BeforeAll
     public static void setServer() throws IOException, SQLException {
         mockServer = new MockWebServer();
-        mockServer.enqueue(new MockResponse().setResponseCode(200).setBody(readFixture("test.html")));
         mockServer.start();
         baseUrl = mockServer.url("/").toString();
+        MockResponse mockResponse = new MockResponse().setResponseCode(200).setBody(readFixture("test.html"));
+        mockServer.enqueue(mockResponse);
     }
 
     @AfterAll
