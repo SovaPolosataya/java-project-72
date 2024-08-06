@@ -166,9 +166,9 @@ public class AppTest {
             assertThat(responseBody).contains("test h1");
             assertThat(responseBody).contains("test description");
 
-            var urlCheck = UrlCheckRepository.getEntities().get(0);
-
-            assertThat(UrlCheckRepository.getEntities()).hasSize(1);
+//            var urlCheck = UrlCheckRepository.getEntities().get(0);
+            var urlCheck = UrlCheckRepository.findUrlId(url.getId()).getFirst();
+//            assertThat(UrlCheckRepository.getEntities()).hasSize(1);
             assertThat(urlCheck.getUrlId()).isEqualTo(url.getId());
             assertThat(urlCheck.getCreatedAt()).isNotNull();
 

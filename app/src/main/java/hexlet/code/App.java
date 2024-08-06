@@ -31,7 +31,7 @@ public final class App {
 
     private static String getDatabase() {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL",
-                "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+                "jdbc:h2:mem:project");
     }
 
     private static String readResourceFile(String fileName) throws IOException {
