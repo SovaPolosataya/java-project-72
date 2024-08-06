@@ -33,7 +33,7 @@ public class UrlChecksController {
             String h1 = doc.selectFirst("h1") == null ? "" : doc.selectFirst("h1").text();
             String description = doc.selectFirst("meta[name=description]") == null ? ""
                     : doc.select("meta[name=description]").attr("content");
-            UrlCheck urlCheck = new UrlCheck(statusCode, h1, title, description, urlId,
+            UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description, urlId,
                     Timestamp.valueOf(LocalDateTime.now()));
             UrlCheckRepository.save(urlCheck);
             ctx.sessionAttribute("flash", "Страница успешно проверена");
