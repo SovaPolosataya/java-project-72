@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -150,24 +149,25 @@ public class AppTest {
 
     @Test
     void checkUrlTest() throws IOException, SQLException {
-        var createdAt = new Timestamp(new Date().getTime());
+        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
         var url = new Url(baseUrl, createdAt);
         UrlRepository.save(url);
 
         JavalinTest.test(app, ((server, client) -> {
             Response response = client.post(NamedRoutes.urlCheckPath(url.getId()));
+            assert response.body() != null;
             String responseBody = response.body().string();
 
             assertThat(response.code()).isEqualTo(200);
-            assertThat(responseBody.contains("200"));
-            assertThat(responseBody.contains("test title"));
-            assertThat(responseBody.contains("test h1"));
-            assertThat(responseBody.contains("test description"));
+            assertThat(responseBody).contains("200");
+            assertThat(responseBody).contains("test title");
+            assertThat(responseBody).contains("test h1");
+            assertThat(responseBody).contains("test description");
 
             var urlCheck = UrlCheckRepository.getEntities().get(0);
 
             assertThat(UrlCheckRepository.getEntities()).hasSize(1);
-            assertThat(urlCheck.getUrlId().equals(url.getId()));
+            assertThat(urlCheck.getUrlId()).isEqualTo(url.getId());
             assertThat(urlCheck.getCreatedAt()).isNotNull();
         }));
     }
