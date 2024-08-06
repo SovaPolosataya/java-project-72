@@ -69,9 +69,11 @@ public class AppTest {
     @Test
     public void allUrlsTest() throws IOException, SQLException {
         String name1 = "https://www.example.com";
+        Timestamp createdAt1 = Timestamp.valueOf(LocalDateTime.now());
         String name2 = "https://www.test.ru";
-        UrlRepository.save(new Url(name1));
-        UrlRepository.save(new Url(name2));
+        Timestamp createdAt2 = Timestamp.valueOf(LocalDateTime.now());
+        UrlRepository.save(new Url(name1, createdAt1));
+        UrlRepository.save(new Url(name2, createdAt2));
 
         JavalinTest.test(app, (server, client) -> {
             Response response = client.get(NamedRoutes.urlsPath());
@@ -132,7 +134,8 @@ public class AppTest {
     @Test
     public void createUrlTest() throws IOException, SQLException {
         String name = "https://www.example.com";
-        Url url = new Url(name);
+        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
+        Url url = new Url(name, createdAt);
         UrlRepository.save(url);
 
         JavalinTest.test(app, (server, client) -> {
