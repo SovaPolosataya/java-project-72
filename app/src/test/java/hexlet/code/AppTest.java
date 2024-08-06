@@ -158,7 +158,6 @@ public class AppTest {
 
         JavalinTest.test(app, ((server, client) -> {
             Response response = client.post(NamedRoutes.urlCheckPath(url.getId()));
-            assert response.body() != null;
             String responseBody = response.body().string();
 
             assertThat(response.code()).isEqualTo(200);
@@ -172,6 +171,11 @@ public class AppTest {
             assertThat(UrlCheckRepository.getEntities()).hasSize(1);
             assertThat(urlCheck.getUrlId()).isEqualTo(url.getId());
             assertThat(urlCheck.getCreatedAt()).isNotNull();
+
+            assertThat(urlCheck).isNotNull();
+            assertThat(urlCheck.getTitle()).isEqualTo("test title");
+            assertThat(urlCheck.getH1()).isEqualTo("test h1");
+            assertThat(urlCheck.getDescription()).isEqualTo("test description");
         }));
     }
 
