@@ -75,11 +75,9 @@ public class AppTest {
     @Test
     public void allUrlsTest() throws IOException, SQLException {
         String name1 = "https://www.example.com";
-        Timestamp createdAt1 = Timestamp.valueOf(LocalDateTime.now());
         String name2 = "https://www.test.ru";
-        Timestamp createdAt2 = Timestamp.valueOf(LocalDateTime.now());
-        UrlRepository.save(new Url(name1, createdAt1));
-        UrlRepository.save(new Url(name2, createdAt2));
+        UrlRepository.save(new Url(name1));
+        UrlRepository.save(new Url(name2));
 
         JavalinTest.test(app, (server, client) -> {
             Response response = client.get(NamedRoutes.urlsPath());
@@ -98,7 +96,7 @@ public class AppTest {
         var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String name = "https://www.example.com";
         Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
-        Url url = new Url(name, createdAt);
+        Url url = new Url(name);
         UrlRepository.save(url);
 
         JavalinTest.test(app, (server, client) -> {
@@ -140,8 +138,7 @@ public class AppTest {
     @Test
     public void createUrlTest() throws IOException, SQLException {
         String name = "https://www.example.com";
-        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
-        Url url = new Url(name, createdAt);
+        Url url = new Url(name);
         UrlRepository.save(url);
 
         JavalinTest.test(app, (server, client) -> {
@@ -158,8 +155,7 @@ public class AppTest {
 
     @Test
     void checkUrlTest() throws IOException, SQLException {
-        Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
-        var url = new Url(baseUrl, createdAt);
+        var url = new Url(baseUrl);
         UrlRepository.save(url);
 
         JavalinTest.test(app, ((server, client) -> {
