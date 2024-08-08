@@ -13,8 +13,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class UrlChecksController {
     public static void checkUrl(Context ctx) throws SQLException {
@@ -33,8 +31,7 @@ public class UrlChecksController {
             String h1 = doc.selectFirst("h1") == null ? "" : doc.selectFirst("h1").text();
             String description = doc.selectFirst("meta[name=description]") == null ? ""
                     : doc.select("meta[name=description]").attr("content");
-            UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description, urlId,
-                    Timestamp.valueOf(LocalDateTime.now()));
+            UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
             UrlCheckRepository.save(urlCheck);
             ctx.sessionAttribute("flash", "Страница успешно проверена");
             ctx.sessionAttribute("flash-type", "success");

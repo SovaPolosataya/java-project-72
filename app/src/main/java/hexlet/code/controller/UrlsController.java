@@ -12,8 +12,6 @@ import io.javalin.http.NotFoundResponse;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +66,7 @@ public class UrlsController {
         String name = String.format("%s://%s%s", parsedUrl.getProtocol(), parsedUrl.getHost(),
                         parsedUrl.getPort() == -1 ? "" : ":" + parsedUrl.getPort()).toLowerCase();
 
-        Url url = new Url(name, Timestamp.valueOf(LocalDateTime.now()));
+        Url url = new Url(name);
 
         if (UrlRepository.findByName(name).isPresent()) {
             ctx.sessionAttribute("flash", "Страница уже существует");
